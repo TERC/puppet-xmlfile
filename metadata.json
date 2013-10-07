@@ -48,7 +48,8 @@
     }
   ],
   "checksums": {
-    "Gemfile": "d41d8cd98f00b204e9800998ecf8427e",
+    "Gemfile": "d0ccdbead0e074792cda2d8fff225cf2",
+    "Gemfile.lock": "be2a620fda2bd7bf88515af28240a381",
     "LICENSE": "ef68ea255efaaf820cb0cc620d653f41",
     "Modulefile": "2cc15731ebc3b69fce0eb8d59d2d839b",
     "README.markdown": "47dc4f617b5ce46f89bb297da7128709",
