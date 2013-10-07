@@ -12,6 +12,21 @@ Puppet::Type.newtype(:xmlfile, :parent => Puppet::Type::File) do
     
     This enables the mixing of exported or virtual content and
     templated or static content, while managing the end-result as a single resource.
+    
+    The following attributes are inherited from the file type:
+    - path
+    - ctime (read-only)
+    - group
+    - mode
+    - mtime (read-only)
+    - owner
+    - selinux_ignore_defaults
+    - selrange
+    - selrole
+    - seltype
+    - seluser
+    - source
+    See: http://docs.puppetlabs.com/references/latest/type.html#file for details
   EOT
   
   # Ignore rather than include in case the base class is messed with.  

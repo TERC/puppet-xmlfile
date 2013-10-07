@@ -44,19 +44,19 @@
         }
       ],
       "name": "xmlfile",
-      "doc": "    An extension of the base file resource type.  An xmlfile behaves like a file in all ways\n    except that its content can be modified via xmlfile_modification resources.\n    \n    This enables the mixing of exported or virtual content and\n    templated or static content, while managing the end-result as a single resource.\n"
+      "doc": "    An extension of the base file resource type.  An xmlfile behaves like a file in all ways\n    except that its content can be modified via xmlfile_modification resources.\n    \n    This enables the mixing of exported or virtual content and\n    templated or static content, while managing the end-result as a single resource.\n    \n    The following attributes are inherited from the file type:\n    - path\n    - ctime (read-only)\n    - group\n    - mode\n    - mtime (read-only)\n    - owner\n    - selinux_ignore_defaults\n    - selrange\n    - selrole\n    - seltype\n    - seluser\n    - source\n    See: http://docs.puppetlabs.com/references/latest/type.html#file for details\n"
     }
   ],
   "checksums": {
     "Gemfile": "d41d8cd98f00b204e9800998ecf8427e",
     "LICENSE": "ef68ea255efaaf820cb0cc620d653f41",
     "Modulefile": "2cc15731ebc3b69fce0eb8d59d2d839b",
-    "README.markdown": "c4ebf17a5f2ad4e79511606b9e96dc6a",
+    "README.markdown": "47dc4f617b5ce46f89bb297da7128709",
     "Rakefile": "f37e6131fe7de9a49b09d31596f5fbf1",
     "lib/puppet/provider/xmlfile/lens.rb": "df962f2f5080bf577ec885999424e440",
     "lib/puppet/provider/xmlfile/posix.rb": "6f4f0338b053e2e8fcacaa7b9f74f960",
     "lib/puppet/provider/xmlfile/windows.rb": "bc8bc05260aa386a10c5488da24f445c",
-    "lib/puppet/type/xmlfile.rb": "8602e680151fd20d884bf1d05a20133c",
+    "lib/puppet/type/xmlfile.rb": "0148b852b3bbd15a87593bb63683a569",
     "lib/puppet/type/xmlfile_modification.rb": "ca35c695cf4d7b5adf4aad250e630931",
     "spec/provider/xmlfile/lens_spec.rb": "4ac050503265453ae11947931f621a39",
     "spec/provider/xmlfile/posix_spec.rb": "1a1e13b84519baba3b45d9d95048ee45",
