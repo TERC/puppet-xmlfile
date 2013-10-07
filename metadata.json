@@ -1,6 +1,6 @@
 {
   "name": "terc-xmlfile",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "summary": "TERC Puppet XMLFile Library",
   "author": "cammoraton",
   "description": "Adds the xmlfile type.",
@@ -50,7 +50,7 @@
   "checksums": {
     "Gemfile": "6d58cf81d420ca698795654aeddfe326",
     "LICENSE": "ef68ea255efaaf820cb0cc620d653f41",
-    "Modulefile": "2cc15731ebc3b69fce0eb8d59d2d839b",
+    "Modulefile": "b5121991b7a128e619f704e8058c3559",
     "README.markdown": "8680f562ed1eae8d27b73323b266648c",
     "Rakefile": "f37e6131fe7de9a49b09d31596f5fbf1",
     "lib/puppet/provider/xmlfile/lens.rb": "df962f2f5080bf577ec885999424e440",
