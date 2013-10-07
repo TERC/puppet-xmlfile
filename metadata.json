@@ -58,8 +58,9 @@
     "lib/puppet/provider/xmlfile/windows.rb": "bc8bc05260aa386a10c5488da24f445c",
     "lib/puppet/type/xmlfile.rb": "0148b852b3bbd15a87593bb63683a569",
     "lib/puppet/type/xmlfile_modification.rb": "5c1298aa5b02c13af31652ead84b2bb5",
-    "spec/provider/xmlfile/lens_spec.rb": "61500a6df4c977e3ae6f81178a04a2e0",
-    "spec/provider/xmlfile/posix_spec.rb": "4bd478d1bf3c6418df6c1181d6c95081",
+    "spec/provider/xmlfile/lens_spec.rb": "16e2a8eb667d541c3ce6310b42b78c8d",
+    "spec/provider/xmlfile/posix_spec.rb": "a9854dac318806818f7deeb405b60b5f",
+    "spec/provider/xmlfile/windows_spec.rb": "27088d983b6c057bc83ded741d21ac31",
     "spec/spec_helper.rb": "1a7c33a3df6bbdff3d460a3ff1146034",
     "spec/type/xmlfile_modification_spec.rb": "e0c6d6779020aed9e49bec87d627a7b3",
     "spec/type/xmlfile_spec.rb": "ba55889a1ecdc647fb2664712f7718d9"
