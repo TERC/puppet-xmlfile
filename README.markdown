@@ -1,6 +1,6 @@
 # TERC Puppet XMLFile Library #
 
-Provides the xmlfile and xmlfile_modification types and associated providers.
+Provides the xmlfile and xmlfile_modification types and associated providers.  No manifest code is included.
 
 ### What? ###
 See the type reference.
