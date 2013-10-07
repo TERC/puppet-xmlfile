@@ -1,3 +1,5 @@
+require 'puppet/type/file' # Let us use file validations
+
 # No provider for this so it should ultimately just be data
 Puppet::Type.newtype(:xmlfile_modification) do
   @doc = <<-'EOT'
@@ -119,7 +121,10 @@ Puppet::Type.newtype(:xmlfile_modification) do
     desc "The path of the xmlfile to work with."
     isrequired
     validate do |value|
-      raise(Puppet::Error, "File path must be fully qualified") unless value =~ /^\//
+      #raise(Puppet::Error, "Invalid filename '#{value.inspect}'") unless value and value != ""
+      unless Puppet::Util.absolute_path?(value)
+        fail Puppet::Error, "File paths must be fully qualified, not '#{value}'"
+      end
     end
   end
   
@@ -168,7 +173,7 @@ Puppet::Type.newtype(:xmlfile_modification) do
   
   def validate_path(prefix, value)
     unless value =~ /^\//
-      raise(Puppet::Error, "#{prefix}: invalid path #{value}, path must begin with a /")
+      raise(Puppet::Error, "#{prefix}: invalid xpath #{value}, path must be fully qualified")
     end 
   end
 end
