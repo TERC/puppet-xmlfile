@@ -47,7 +47,7 @@ Puppet::Type.newtype(:xmlfile, :parent => Puppet::Type::File) do
       klass = "Puppet::Type::File::Parameter#{inherit.to_s.capitalize}"
       begin
         newparam(inherit, :parent => self.const_get(klass)) do
-          desc self.const_get(klass).describe
+          desc self.const_get(klass).doc
         end
       rescue 
         warning "Inheritance assumption case problem: #{klass} undefined but not ignored."
@@ -59,7 +59,7 @@ Puppet::Type.newtype(:xmlfile, :parent => Puppet::Type::File) do
   Puppet::Type::File.properties.each do |inherit|
     unless IGNORED_PROPERTIES.include?(inherit.name)
       newproperty(inherit.name.to_sym, :parent => inherit) do
-        desc inherit.describe
+        desc inherit.doc
       end
     end
   end

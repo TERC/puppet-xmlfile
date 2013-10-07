@@ -56,7 +56,7 @@
     "lib/puppet/provider/xmlfile/lens.rb": "df962f2f5080bf577ec885999424e440",
     "lib/puppet/provider/xmlfile/posix.rb": "6f4f0338b053e2e8fcacaa7b9f74f960",
     "lib/puppet/provider/xmlfile/windows.rb": "bc8bc05260aa386a10c5488da24f445c",
-    "lib/puppet/type/xmlfile.rb": "62b6820fbcb6fe25d38a1aedc5f21c3e",
+    "lib/puppet/type/xmlfile.rb": "f2f1a27bcc1245f1ef44cf7652624820",
     "lib/puppet/type/xmlfile_modification.rb": "5c1298aa5b02c13af31652ead84b2bb5",
     "spec/provider/xmlfile/lens_spec.rb": "16e2a8eb667d541c3ce6310b42b78c8d",
     "spec/provider/xmlfile/posix_spec.rb": "a9854dac318806818f7deeb405b60b5f",
