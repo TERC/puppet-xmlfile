@@ -12,11 +12,11 @@ concat library, and sandwich augeas and file types that way, have a triggered ex
 managing multiple resources when what we really want is just one and some changes.  Just no good way to really deal with it.
 
 My first thought was "my kingdom for an array!" which led to the databucket library, the idea behind which was to do 
-collection of resource parameters at catalog compilition into an array, and then use that within the template.  
-This idea, while cool, is, unfortunately, probably not reliable enough for production or capable of being made reliable enough 
-for production.  So collecting and using virtual or exported data is out.
+collection of resource parameters at catalog compilition into an array, and then use that within the template. This idea, while 
+cool, is, unfortunately, probably not reliable enough for production or capable of being made reliable enough for production.  
+So collecting and using virtual or exported data and directly referencing it(IE: in a template) is out.
 
-Hence this, which sidetracks the whole issue.  
+Hence this, which sidetracks the whole issue. 
 
 ### How? ###
 By extending the Puppet file type and using some providers collected data is applied as a series of modifications at the moment

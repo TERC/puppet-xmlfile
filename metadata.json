@@ -51,7 +51,7 @@
     "Gemfile": "6d58cf81d420ca698795654aeddfe326",
     "LICENSE": "ef68ea255efaaf820cb0cc620d653f41",
     "Modulefile": "ae6f703f75e2cf71a8737fad03fcded6",
-    "README.markdown": "679f84c444b87018e63c9033e7d35207",
+    "README.markdown": "933fef40045bbd55d635ce4bcf1f2d22",
     "Rakefile": "f37e6131fe7de9a49b09d31596f5fbf1",
     "lib/puppet/provider/xmlfile/lens.rb": "be301ab155cd46316c5bebdeacb37dca",
     "lib/puppet/provider/xmlfile/posix.rb": "6f4f0338b053e2e8fcacaa7b9f74f960",
