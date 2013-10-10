@@ -50,9 +50,23 @@ class XmlLens
     return @xml
   end
   
+  # Add a blank node
+  def add(addto, add)
+    start_element = nil
+    cur_element = nil
+    add.each do |build|
+      unless cur_element.nil?
+        cur_element = cur_element.add_element(build[0])
+      else
+        cur_element = REXML::Element.new(build[0])
+        start_element = cur_element
+      end
+    end
+    addto.first.add_element(start_element)
+  end
+  
   # Clears an element
   def clear(path)
-    puts "clear #{path.inspect}"
     if path.is_a? Array
       path.each do |p|
         p.elements.each do |child|
@@ -162,6 +176,13 @@ class XmlLens
     cmd = parse[1]
     args = parse[2]
     case cmd
+    when "add"
+      built_path = build_path(parse[2].scan(/\/([^\[\/]*)(\[[^\]\[]*\])?+/))
+      if built_path[:exists]
+        @operations.push( Proc.new{ self.add(built_path[:final_path].first.parents, [ built_path[:final_path].first.name ] ) } )
+      else
+        @operations.push( Proc.new{ self.add(built_path[:final_path], built_path[:remainder] ) } )
+      end
     when "clear"
       # Break down the paths
       built_path = build_path(parse[2].scan(/\/([^\[\/]*)(\[[^\]\[]*\])?+/))
