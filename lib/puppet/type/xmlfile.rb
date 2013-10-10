@@ -111,7 +111,7 @@ Puppet::Type.newtype(:xmlfile, :parent => Puppet::Type::File) do
       content = String.new # No content so we start with a base string.
     end
     # Wrap it in a REXML::Document
-    xml_content = REXML::Document.new(content)
+    xml_content = REXML::Document.new(content, { :raw => :all })
     
     # Need to order this by requirements.  I *think* puppet does this in the catalog, but I'm not positive.
     catalog.resources.select{ |resource| resource if resource.is_a?(Puppet::Type.type(:xmlfile_modification)) and 
