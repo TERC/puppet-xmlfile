@@ -1,0 +1,71 @@
+{
+  "name": "terc-xmlfile",
+  "version": "0.3.0",
+  "summary": "TERC Puppet XMLFile Library",
+  "author": "cammoraton",
+  "description": "Adds the xmlfile type.",
+  "dependencies": [],
+  "types": [
+    {
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Name to use to identify this modification.  Must be unique."
+        },
+        {
+          "name": "changes",
+          "doc": "    Changes which should be applied to the file.  Can be a command or an array of commands.  Augeas-esque syntax.\n    \n    Paths are XPATHs. Attributes are matched via #attribute/\u003cATTR\u003e, or assumed to be text.  Evaluations must be bracketed.\n    \n    Commands:\n    \n    - set \u003cPATH\u003e \"\u003cVALUE\u003e\"\n    : Sets the path to value, creates it if it does not exist\n    \n    - rm \u003cPATH\u003e\n    : Removes the path.\n    \n    - clear \u003cPATH\u003e\n    : Clears the specied path.  Does not create it.\n    \n    - ins \u003cPATH\u003e (before|after) \u003cLOCATION\u003e\n    : Constructs an element(or elements) using path and inserts it before or after the path specified by location\n     \n    - sort \u003cPATH\u003e (\u003cVALUE\u003e|text)\n    : Sorts all elements that match path by the attribute specified in value.\n    \n    Path Functions:\n    \n    - last()\n    : During initial parsing, substitutes for the index of the last item that matches the expression.\n    \n"
+        },
+        {
+          "name": "onlyif",
+          "doc": "    Constrains application of changes via conditionals.  Augeas-esque syntax.\n    \n    Paths are XPATHs.  Attributes are matched via #attribute/\u003cATTR\u003e, or assumed to be text.  Evaluations must be bracketed.\n    \n    Commands:\n    \n    - match \u003cPATH\u003e size (\u003d\u003d|!\u003d|\u003c|\u003e|\u003c\u003d|\u003e\u003d) \u003cVALUE\u003e\n    : Evaluates if a match for the given path meets the conditions specified.\n    \n    - get \u003cPATH\u003e (\u003d\u003d|!\u003d|\u003c|\u003e|\u003c\u003d|\u003e\u003d) \u003cVALUE\u003e\n    : Checks if a path matches a given value under the conditions specified\n    \n    Path Functions:\n    \n    - last()\n    : During initial parsing, substitutes for the index of the last item that matches the expression.\n    \n"
+        },
+        {
+          "name": "file",
+          "doc": "The path of the xmlfile to work with."
+        }
+      ],
+      "name": "xmlfile_modification",
+      "doc": "    Apply a change or an array of changes constrained by conditionals, to a specified xml file\n    using syntax similar to the augeas XML lens.  Changes are applied in memory\n    during content generation when the catalog is applied.\n    \n    Requires:\n    \n    - REXML\n\n    Sample usage with strings:\n\n        xmlfile_modification{\"test\" :\n          file    \u003d\u003e \"/etc/activemq/activemq.conf.xml\",\n          changes \u003d\u003e \"set /beans/broker/transportConnectors/transportConnector[last()+1]/#attribute/name \\\"test\\\"\",\n          onlyif  \u003d\u003e \"match /beans/broker/transportConnectors/transportConnector[#attribute/name \u003d\u003d \\\"test\\\"] size \u003c 1\",\n        }\n\n    Sample usage with arrays:\n\n        xmlfile_modification{\"test\" :\n          file    \u003d\u003e \"/etc/activemq/activemq.conf.xml\",\n          changes \u003d\u003e [ \"set /beans/broker/transportConnectors/transportConnector[last()+1]/#attribute/name \\\"tests\\\"\", \n                       \"set /beans/broker/transportConnectors/transportConnector[last()+1]/#attribute/value \\\"tests\\\"\"],\n          onlyif \u003d\u003e  [ \"match /beans/broker/transportConnectors/transportConnector[#attribute/name \u003d\u003d \\\"tests\\\"] size \u003c 1\" ],\n        }\n       \n"
+    },
+    {
+      "properties": [
+        {
+          "name": "content",
+          "doc": "      The desired contents of a file, as a string. This attribute is mutually\n      exclusive with `source`.\n"
+        }
+      ],
+      "providers": [
+        {
+          "name": "xmlfile_windows"
+        },
+        {
+          "name": "xmlfile_posix"
+        }
+      ],
+      "name": "xmlfile",
+      "doc": "    An extension of the base file resource type.  An xmlfile behaves like a file in all ways\n    except that its content can be modified via xmlfile_modification resources.\n    \n    This enables the mixing of exported or virtual content and\n    templated or static content, while managing the end-result as a single resource.\n    \n    The following attributes are inherited from the file type:\n    - path\n    - ctime (read-only)\n    - group\n    - mode\n    - mtime (read-only)\n    - owner\n    - selinux_ignore_defaults\n    - selrange\n    - selrole\n    - seltype\n    - seluser\n    - source\n    See: http://docs.puppetlabs.com/references/latest/type.html#file for details\n"
+    }
+  ],
+  "checksums": {
+    "Gemfile": "6d58cf81d420ca698795654aeddfe326",
+    "LICENSE": "ef68ea255efaaf820cb0cc620d653f41",
+    "Modulefile": "ae6f703f75e2cf71a8737fad03fcded6",
+    "README.markdown": "8680f562ed1eae8d27b73323b266648c",
+    "Rakefile": "f37e6131fe7de9a49b09d31596f5fbf1",
+    "lib/puppet/provider/xmlfile/lens.rb": "ca64c563d8a296d4faf316937de16193",
+    "lib/puppet/provider/xmlfile/posix.rb": "6f4f0338b053e2e8fcacaa7b9f74f960",
+    "lib/puppet/provider/xmlfile/windows.rb": "bc8bc05260aa386a10c5488da24f445c",
+    "lib/puppet/type/xmlfile.rb": "edf0e6827f8f49680e86c067b82ca73f",
+    "lib/puppet/type/xmlfile_modification.rb": "5c1298aa5b02c13af31652ead84b2bb5",
+    "spec/provider/xmlfile/lens_spec.rb": "16e2a8eb667d541c3ce6310b42b78c8d",
+    "spec/provider/xmlfile/posix_spec.rb": "a9854dac318806818f7deeb405b60b5f",
+    "spec/provider/xmlfile/windows_spec.rb": "27088d983b6c057bc83ded741d21ac31",
+    "spec/spec_helper.rb": "1a7c33a3df6bbdff3d460a3ff1146034",
+    "spec/type/xmlfile_modification_spec.rb": "e0c6d6779020aed9e49bec87d627a7b3",
+    "spec/type/xmlfile_spec.rb": "ba55889a1ecdc647fb2664712f7718d9"
+  },
+  "source": "git://github.com/TERC/puppet-xmlfile",
+  "project_page": "https://github.com/TERC/puppet-xmlfile",
+  "license": "MIT or Apache 2.0"
+}
