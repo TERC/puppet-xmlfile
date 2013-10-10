@@ -209,7 +209,7 @@ class XmlLens
       else
         @validations.push( Proc.new { evaluate_expression( nil, query[2], query[3] ) } )
       end
-    when "ins"  
+    when "ins", "insert"  
       args = parse[2].match(/(.*)\ (before|after)\ (.*)$/)
       raise ArgumentError if args.nil?
       built_path = build_path(args[3].scan(/\/([^\[\/]*)(\[[^\]\[]*\])?+/))
@@ -232,7 +232,7 @@ class XmlLens
       else
         @validations.push( Proc.new { evaluate_expression(0, query[2], query[3]) })
       end
-    when "rm"
+    when "rm", "remove"
       built_path = build_path(parse[2].scan(/\/([^\[\/]*)(\[[^\]\[]*\])?+/))
       
       if built_path[:exists] # Only clear if the thing exists
