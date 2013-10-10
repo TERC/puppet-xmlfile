@@ -147,7 +147,7 @@ Puppet::Type.newtype(:xmlfile_modification) do
       args = parse[2].match(/(.*)\ \"(.*)\"$/)
       raise(Puppet::Error, "Invalid syntax for set command") if args.nil?
       validate_path(parse[1], args[1])
-    when "rm"
+    when "rm", "remove"
       validate_path(parse[1], parse[2])
     when "sort"
       args = parse[2].match(/(.*)(\ )?(.*|text)?(\ )?(desc|asc)?$/)
@@ -157,7 +157,7 @@ Puppet::Type.newtype(:xmlfile_modification) do
       query = parse[2].match(/(.*)\ size\ (==|!=|<|>|<=|>=)\ (\d)+$/)
       raise(Puppet::Error, "Invalid syntax for match conditional") if query.nil?
       validate_path(parse[1], query[1])
-    when "ins"
+    when "ins", "insert"
       args = parse[2].match(/(.*)\ (before|after)\ (.*)$/)
       raise(Puppet::Error, "Invalid syntax for ins command") if args.nil?
       validate_path(parse[1], args[1])
