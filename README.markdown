@@ -13,8 +13,8 @@ managing multiple resources when what we really want is just one and some change
 
 My first thought was "my kingdom for an array!" which led to the databucket library, the idea behind which was to do 
 collection of resource parameters at catalog compilition into an array, and then use that within the template. This idea, while 
-cool, is, unfortunately, probably not reliable enough for production or capable of being made reliable enough for production.  
-So collecting and using virtual or exported data and directly referencing it(IE: in a template) is out.
+cool, is, unfortunately, probably not reliable enough for production or capable of being made reliable enough for production.  So 
+collecting and using virtual or exported data and directly referencing it(IE: in a template) is out.
 
 Hence this, which sidetracks the whole issue. 
 
