@@ -330,11 +330,25 @@ class XmlLens
   end
   
   def evaluate_expression(attr, expr, val)
+    # If attr and val are all digits assume an integer comparison
+    if attr =~ /^(\d)+$/ and val =~ /^(\d)+$/
+      eval_attr = attr.to_i
+      eval_val  = val.to_i
+    else
+      eval_attr = attr
+      eval_val  = val
+    end
+    
     case expr
     when "=="
-      return (attr == val)
+      return (eval_attr == eval_val)
     when "!="
-      return (attr != val)
+      return (eval_attr != eval_val)
+    when "+"
+      return (attr + val)
+    when "-"
+      return (attr - val)
+    # The rest are only math so we do a conversion to_i
     when "<"
       return (attr.to_i < val.to_i)
     when ">"
@@ -343,10 +357,6 @@ class XmlLens
       return (attr.to_i <= val.to_i)
     when ">="
       return (attr.to_i >= val.to_i)
-    when "+"
-      return (attr + val)
-    when "-"
-      return (attr - val)
     end
     raise ArgumentError
   end
@@ -375,17 +385,17 @@ class XmlLens
         else  # Function or bust!
           parse = evaluate.match(/(last)\((.*)?\)(\+|\-)?(\d+)?$/)
           return nil unless parse
-        case parse[1]
-        when 'last'
-          if parse[3]
-            return nil if parse[3] == '+'
-            # Must be '-', right?  This isn't a dangerous assumption AT ALL
-            raise ArgumentError unless parse[4]
-            test = match[match.length() - parse[4].to_i]
-            return nil unless retval.include?(match[match.length() - parse[4].to_i])
-            retval = [match[match.length() - parse[4].to_i]]
-          else
-            return nil unless retval.include?(match.last)
+          case parse[1]
+          when 'last'
+            if parse[3]
+              return nil if parse[3] == '+'
+              # Must be '-', right?  This isn't a dangerous assumption AT ALL
+              raise ArgumentError unless parse[4]
+              # test = match[match.length() - parse[4].to_i]
+              return nil unless retval.include?(match[match.length() - parse[4].to_i])
+              retval = [match[match.length() - parse[4].to_i]]
+            else
+              return nil unless retval.include?(match.last)
               retval = [ match.last ]
             end
           end
