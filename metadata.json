@@ -53,7 +53,7 @@
     "Modulefile": "b5121991b7a128e619f704e8058c3559",
     "README.markdown": "8680f562ed1eae8d27b73323b266648c",
     "Rakefile": "f37e6131fe7de9a49b09d31596f5fbf1",
-    "lib/puppet/provider/xmlfile/lens.rb": "db0e013c1d08eff4b1f734c66760c8b5",
+    "lib/puppet/provider/xmlfile/lens.rb": "ca64c563d8a296d4faf316937de16193",
     "lib/puppet/provider/xmlfile/posix.rb": "6f4f0338b053e2e8fcacaa7b9f74f960",
     "lib/puppet/provider/xmlfile/windows.rb": "bc8bc05260aa386a10c5488da24f445c",
     "lib/puppet/type/xmlfile.rb": "f2f1a27bcc1245f1ef44cf7652624820",

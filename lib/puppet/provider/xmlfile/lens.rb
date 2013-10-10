@@ -146,7 +146,7 @@ class XmlLens
         case attr
         when "text"
           sorted = elem.elements.sort { |e1, e2| e1.text <=> e2.text }
-        when nil
+        when nil, ""
           sorted = elem.elements.sort { |e1, e2| e1.name <=> e2.name }
         else
           sorted = elem.elements.sort { |e1, e2| e1.attributes[attr] <=> e2.attributes[attr] }
