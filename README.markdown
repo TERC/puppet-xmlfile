@@ -32,9 +32,9 @@ See the LICENSE file.
 ####  v0.3.0 ####
 - Augeas add command equivalent added.
 - Aliases for ins and rm(insert and remove, respectively) created so it functions more like the augeas type.
-- Sort behavior fixed so that matching for child node name sorting is triggered on both null and 0-length string args
-- Conditional behavior for numberals improved.  If both parts of evaluate are pure digits, does a to_i on both before comparison.
-- Raw processing now on by default
+- Sort behavior fixed so that matching for child node name sorting is triggered on both null and 0-length string args.
+- Conditional behavior for numerals improved.  If both parts of evaluate are pure digits, does a to_i on both before comparison.
+- Raw processing now on by default.
 - Updated this document.
 
 #### v0.2.0 #####
