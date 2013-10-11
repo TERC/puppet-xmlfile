@@ -4,6 +4,16 @@ Release notes for the terc-xmlfile module
 
 ---------------------------------------
 
+2013-10-?? Release 0.3.1
+========================
+
+### Summary
+This release will add a ton of tests and documentation updates, but consists of no changes to actual running code.
+
+### Enhancements
+- Improved tests.
+- Documentation improvements.
+
 2013-10-10 Release 0.3.0
 ========================
 
@@ -22,10 +32,19 @@ This release adds the add command, this file, aliases for ins/rm, raw processing
 - REXML now runs in raw mode for all nodes by default.
 - Sort now sorts by node name if third argument is either 0 length or nil.
 
-0.2.0
-=====
+2013-10-07 Release 0.2.0
+========================
+
+### Summary
 This is a minor release that warranted a minor version update due to the metaprogramming involved.
 
 #### Detailed Changes
 - Automatic importation of docs for inherited attributes on the inherited type.
+
+2013-10-07 Release 0.1.0
+========================
+
+### Summary
+Initial Release
+
 ---------------------------------------

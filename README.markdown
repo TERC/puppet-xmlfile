@@ -5,7 +5,7 @@ TERC Puppet XMLFile Library
 
 1. [Overview - What is the xmlfile module?](#overview)
 2. [Why - Reasoning for developing this module ](#why?)
-3. [Implementation - Summary of the under the hood implementation of the module ](#how)
+3. [Implementation - Summary of the under the hood implementation of the module ](#implementation)
 4. [Limitations - Known issues and limitations of the implementation ](#limitations)
 5. [Release Notes - Notes on the most recent updates to the module](#release-notes)
 
@@ -43,10 +43,13 @@ Limitations
 I don't have a complete windows puppet kit and so while we extend the windows provider and it should work, I can't actually 
 test it.
 
+Property fix is called via send on object creation.  This may create a security issue when a file is first created if the properties are
+not correctly set, although this should get fixed on the next puppet run.
+
 The augeas implementation is incomplete and not exact.  If you notice an issue or unexpected behavior, please open an issue.
 
 REXML has some limitations and quirks of its own.  <, &, and > if by themselves will be automagically converted to 
-&lt; &amp; and &gt; and there's no way to turn this off.  Content is otherwise put into raw mode and so it shouldn't be
+&amp;lt; &amp;amp; and &amp;gt; and there's no way to turn this off.  Content is otherwise put into raw mode and so it shouldn't be
 messed with.
 
 Release Notes
