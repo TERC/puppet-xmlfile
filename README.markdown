@@ -1,13 +1,23 @@
-# TERC Puppet XMLFile Library #
+TERC Puppet XMLFile Library
+=======
 
-Provides the xmlfile and xmlfile_modification types and associated providers.  
+####Table of Contents
 
-No manifest code is included.
+1. [Overview - What is the xmlfile module?](#overview)
+2. [Why - Reasoning for developing this module ](#why?)
+3. [Implementation - Summary of the under the hood implementation of the module ](#how)
+4. [Limitations - Known issues and limitations of the implementation ](#limitations)
+5. [Release Notes - Notes on the most recent updates to the module](#release-notes)
 
-### What? ###
-See the type reference.
+Overview
+--------
 
-### Why? ###
+The xmlfile module provides the xmlfile and xmlfile_modification types as well as associated providers.
+
+No manifest code is included.  This is pretty much pure ruby code for inclusion in other modules.
+
+Why?
+--------
 While working on a variety of modules I kept running into cases where what I really, really wanted to do was apply augeas 
 lenses to a template, but this was problematic.  There were several options for this, none of them good.  I could use a file
 concat library, and sandwich augeas and file types that way, have a triggered exec resource, etc.  No matter what we're basically
@@ -20,18 +30,28 @@ collecting and using virtual or exported data and directly referencing it(IE: in
 
 Hence this, which sidetracks the whole issue. 
 
-### How? ###
-By extending the Puppet file type and using some providers collected data is applied as a series of modifications at the moment
-of catalog application.  Content is defined as the sourced or templated content + whatever modifications have been linked to
-that file.
+Implementation
+--------
+By extending the Puppet file type and using some providers we can merge templated or sourced content and modifications and
+have puppet treat this content as if it had been passed directly.
 
-The changes themeselves are applied via the XMLLens class, which sort of fakes being augeas.
+The changes themeselves are applied via the XmlLens class, which fakes being augeas.  This is accomplished via the standard
+ruby REXML library.  Upshot of this is we can add in things like sorting.
 
-### License? ###
-See the LICENSE file.
+Limitations
+--------
+I don't have a complete windows puppet kit and so while we extend the windows provider and it should work, I can't actually 
+test it.
 
-### Changes ###
-####  v0.3.0 ####
+The augeas implementation is incomplete and not exact.  If you notice an issue or unexpected behavior, please open an issue.
+
+REXML has some limitations and quirks of its own.  <, &, and > if by themselves will be automagically converted to 
+&lt; &amp; and &gt; and there's no way to turn this off.  Content is otherwise put into raw mode and so it shouldn't be
+messed with.
+
+Release Notes
+--------
+####  v0.3.0
 - Augeas add command equivalent added.
 - Aliases for ins and rm(insert and remove, respectively) created so it functions more like the augeas type.
 - Sort behavior fixed so that matching for child node name sorting is triggered on both null and 0-length string args.
@@ -39,5 +59,5 @@ See the LICENSE file.
 - Raw processing now on by default.
 - Updated this document.
 
-#### v0.2.0 #####
+#### v0.2.0
 - Automatic importation of docs for inherited attributes.

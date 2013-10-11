@@ -44,20 +44,29 @@ Puppet::Type.newtype(:xmlfile_modification) do
     
     Commands:
     
+    - add <PATH>
+    : Adds an empty node at path(always creates last element, rest as needed)
+    
     - set <PATH> "<VALUE>"
     : Sets the path to value, creates it if it does not exist
     
     - rm <PATH>
     : Removes the path.
     
+    - remove
+    : Alias for rm.
+    
     - clear <PATH>
     : Clears the specied path.  Does not create it.
     
     - ins <PATH> (before|after) <LOCATION>
     : Constructs an element(or elements) using path and inserts it before or after the path specified by location
+    
+    - insert
+    : Alias for ins
      
     - sort <PATH> (<VALUE>|text)
-    : Sorts all elements that match path by the attribute specified in value.
+    : Sorts all elements that match path by the attribute specified in value(or by element name if nothing specified).
     
     Path Functions:
     
