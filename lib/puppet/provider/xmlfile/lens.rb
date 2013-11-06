@@ -122,7 +122,7 @@ class XmlLens
     unless element.nil?
       set_element = element.first
     else
-      built_path = build_path(path.scan(/\/([^\[\/]*)(\[[^\]\[]*\])?+/))
+      built_path = build_path(path.scan(/\/([^\[\/]+)(\[[^\]\[]+\])?/))
       if built_path[:exists]
         set_element = built_path[:final_path].first
       else
@@ -177,7 +177,7 @@ class XmlLens
     args = parse[2]
     case cmd
     when "add"
-      built_path = build_path(parse[2].scan(/\/([^\[\/]*)(\[[^\]\[]*\])?+/))
+      built_path = build_path(parse[2].scan(/\/([^\[\/]*)(\[[^\]\[]*\])?/))
       if built_path[:exists]
         @operations.push( Proc.new{ self.add(built_path[:final_path].first.parents, [ built_path[:final_path].first.name ] ) } )
       else
@@ -185,7 +185,7 @@ class XmlLens
       end
     when "clear"
       # Break down the paths
-      built_path = build_path(parse[2].scan(/\/([^\[\/]*)(\[[^\]\[]*\])?+/))
+      built_path = build_path(parse[2].scan(/\/([^\[\/]*)(\[[^\]\[]*\])?/))
       
       if built_path[:exists] # Only clear if the thing exists
         @operations.push( Proc.new { self.clear(built_path[:final_path]) } )
@@ -203,7 +203,7 @@ class XmlLens
         attr = nil
       end
       
-      built_path = build_path(path.scan(/\/([^\[\/]*)(\[[^\]\[]*\])?+/))
+      built_path = build_path(path.scan(/\/([^\[\/]*)(\[[^\]\[]*\])?/))
       if built_path[:exists]
         @validations.push( Proc.new { self.get(built_path[:final_path], query[2], query[3], attr) })
       else
@@ -212,7 +212,7 @@ class XmlLens
     when "ins", "insert"  
       args = parse[2].match(/(.*)\ (before|after)\ (.*)$/)
       raise ArgumentError if args.nil?
-      built_path = build_path(args[3].scan(/\/([^\[\/]*)(\[[^\]\[]*\])?+/))
+      built_path = build_path(args[3].scan(/\/([^\[\/]*)(\[[^\]\[]*\])?/))
       if built_path[:exists]
         args[1].scan(/\/(^\/)/).each do |item|
           puts item        
@@ -226,14 +226,14 @@ class XmlLens
       query = parse[2].match(/(.*)\ size\ (==|!=|<|>|<=|>=)\ (\d)+$/)
       raise ArgumentError if query.nil?
       
-      built_path = build_path(query[1].scan(/\/([^\[\/]*)(\[[^\]\[]*\])?+/))
+      built_path = build_path(query[1].scan(/\/([^\[\/]*)(\[[^\]\[]*\])?/))
       if built_path[:exists]
         @validations.push( Proc.new { evaluate_expression(built_path[:final_path].size, query[2], query[3].to_i) })
       else
         @validations.push( Proc.new { evaluate_expression(0, query[2], query[3]) })
       end
     when "rm", "remove"
-      built_path = build_path(parse[2].scan(/\/([^\[\/]*)(\[[^\]\[]*\])?+/))
+      built_path = build_path(parse[2].scan(/\/([^\[\/]*)(\[[^\]\[]*\])?/))
       
       if built_path[:exists] # Only clear if the thing exists
         @operations.push( Proc.new { self.rm(built_path[:final_path]) } )
@@ -251,7 +251,7 @@ class XmlLens
         attr = nil
       end
       
-      built_path = build_path(path.scan(/\/([^\[\/]*)(\[[^\]\[]*\])?+/))
+      built_path = build_path(path.scan(/\/([^\[\/]*)(\[[^\]\[]*\])?/))
       if built_path[:exists]
         @operations.push( Proc.new { set(built_path[:final_path], args[2], attr, nil) } )
       else
@@ -269,7 +269,7 @@ class XmlLens
         attr = nil
       end
       
-      built_path = build_path(args[1].scan(/\/([^\[\/]*)(\[[^\]\[]*\])?+/))
+      built_path = build_path(args[1].scan(/\/([^\[\/]*)(\[[^\]\[]*\])?/))
       if built_path[:exists]
         @operations.push( Proc.new { sort(built_path[:final_path], attr, args[5]) } )
       end
@@ -303,7 +303,7 @@ class XmlLens
   def collapse_functions(args)
     retval = ""
     cur_path = self.match(String.new)
-    args.scan(/\/([^\[\/]*)(\[[^\]\[]*\])?+/).each do |path|
+    args.scan(/\/([^\[\/]*)(\[[^\]\[]*\])?/).each do |path|
       cur_path = self.match(path.first, cur_path) unless cur_path.nil?
       ftest = "#{path.last}".match(/(last)\((.*)?\)(\+|\-)?(\d+)?/)
       unless ftest
@@ -378,8 +378,8 @@ class XmlLens
         end
       else
         # Either a size check or a function
-        if evaluate.match(/^(\[)?(\d+)(\])?+$/)  # All digits, must be an index variables
-          index = evaluate.match(/^(\[)?(\d+)(\])?+$/)[2].to_i - 1
+        if evaluate.match(/^(\[)?(\d+)(\])?$/)  # All digits, must be an index variables
+          index = evaluate.match(/^(\[)?(\d+)(\])?$/)[2].to_i - 1
           return nil if (match.length < index) or !retval.include?(match[index])
           retval = [ match[index] ]
         else  # Function or bust!

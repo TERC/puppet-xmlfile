@@ -96,6 +96,25 @@ Puppet::Type.newtype(:xmlfile, :parent => Puppet::Type::File) do
     end
   end
 
+  newparam(:raw) do
+    desc <<-'EOT'
+      The desired formatting of the content after being passed through the REXML lens.
+    EOT
+    
+    defaultto true
+  end
+
+  # Formatting:  In case you want REXML to pretty things up.
+  newparam(:format) do
+    desc <<-'EOT'
+      The desired formatting of the content after being passed through the REXML lens.
+    EOT
+    
+    validate do |value|
+      
+    end
+  end
+
   # Generates content
   def should_content # Ape the name from property::should
     return @should_content if @should_content # Only do this ONCE
@@ -111,7 +130,12 @@ Puppet::Type.newtype(:xmlfile, :parent => Puppet::Type::File) do
       content = String.new # No content so we start with a base string.
     end
     # Wrap it in a REXML::Document
-    xml_content = REXML::Document.new(content, { :raw => :all })
+    
+    if self[:raw] == true
+      xml_content = REXML::Document.new(content, { :raw => :all })
+    else
+      xml_content = REXML::Document.new(content)
+    end
     
     # Need to order this by requirements.  I *think* puppet does this in the catalog, but I'm not positive.
     catalog.resources.select{ |resource| resource if resource.is_a?(Puppet::Type.type(:xmlfile_modification)) and 
@@ -121,7 +145,17 @@ Puppet::Type.newtype(:xmlfile, :parent => Puppet::Type::File) do
     end
     
     # Write the final xml into the instance var.
+    if self[:format].nil?
     xml_content.write(@should_content)
+    else
+      case self[:format]
+      when "bah"
+        
+      else
+        xml_content.write(@should_content)
+      end
+    end
+    
     return @should_content
   end
   

@@ -35,6 +35,16 @@
           "doc": "      The desired contents of a file, as a string. This attribute is mutually\n      exclusive with `source`.\n"
         }
       ],
+      "parameters": [
+        {
+          "name": "raw",
+          "doc": "      The desired formatting of the content after being passed through the REXML lens.\n"
+        },
+        {
+          "name": "format",
+          "doc": "      The desired formatting of the content after being passed through the REXML lens.\n"
+        }
+      ],
       "providers": [
         {
           "name": "xmlfile_windows"
@@ -57,7 +67,7 @@
     "lib/puppet/provider/xmlfile/lens.rb": "be301ab155cd46316c5bebdeacb37dca",
     "lib/puppet/provider/xmlfile/posix.rb": "6f4f0338b053e2e8fcacaa7b9f74f960",
     "lib/puppet/provider/xmlfile/windows.rb": "bc8bc05260aa386a10c5488da24f445c",
-    "lib/puppet/type/xmlfile.rb": "edf0e6827f8f49680e86c067b82ca73f",
+    "lib/puppet/type/xmlfile.rb": "36827a79374937162d00e93da9088d79",
     "lib/puppet/type/xmlfile_modification.rb": "6421d7716f517529524ace9bb926144f",
     "spec/provider/xmlfile/lens_spec.rb": "f1b0db0cb111b1025fffef81f32b64ea",
     "spec/provider/xmlfile/posix_spec.rb": "a9854dac318806818f7deeb405b60b5f",
