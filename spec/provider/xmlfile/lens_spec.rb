@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'puppet/provider/xmlfile/lens'
 require 'puppet/util/diff'
 
-describe XmlLens do  
+describe XmlLens do
   let(:testobject) { XmlLens }
   # Build out tests as we come up with comparisons to augeas
   before(:all) do
@@ -77,24 +77,45 @@ describe XmlLens do
 </beans>
     EOT
     @rexml = REXML::Document.new(@content)
-    
-    # Create and initialize the tempfile
-    file = File.open("/tmp/xmllens_test.tmp", "w+")
-    @rexml.write(file)
-    file.close
   end
   
   after(:all) do
     # Delete the tempfile
-    File.unlink("/tmp/xmllens_test.tmp")
+    # File.unlink("/tmp/xmllens_test.tmp")
   end
-
+  
   describe :add do
-    it "should create identical output to augeas"
   end
   
   describe :set do
-    it "should create identical output to augeas"
+    it "should test things" do
+      Puppet::Util::Storage.stubs(:store)
+      
+      changes = "beans/broker/plugins/authorizationPlugin/map/authorizationMap/authorizationEntries/authorizationEntry[last()+1]/#attribute/queue \"test\""
+      aug_changes = [ "set #{changes}" ]
+      xmllens_changes = [ "set /#{changes}" ]
+      
+      puppet_test = File.open('/tmp/puppet', 'w+')
+      @rexml.write(puppet_test)
+      puppet_test.close
+      
+      resource = Puppet::Type.type(:augeas).new(
+         :name => 'test',
+         :incl => '/tmp/puppet',
+         :lens => 'Xml.lns',
+         :changes => aug_changes,
+      )
+
+      catalog = Puppet::Resource::Catalog.new
+      catalog.add_resource resource
+
+      catalog.apply
+      
+      test = XmlLens.new(@rexml, xmllens_changes, nil)
+      test.evaluate.write($stdout)
+      
+      puts File.read(puppet_test)
+    end
   end
   
   describe :rm do

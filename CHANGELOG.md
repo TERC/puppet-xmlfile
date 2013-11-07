@@ -4,15 +4,18 @@ Release notes for the terc-xmlfile module
 
 ---------------------------------------
 
-2013-10-?? Release 0.3.1
+2013-11-07 Release 0.3.1
 ========================
 
 ### Summary
-This release will add a ton of tests and documentation updates, but consists of no changes to actual running code.
+This release adds tests, documentation improvements, and better Ruby 1.8.7 compatibility
 
 ### Enhancements
 - Improved tests.
 - Documentation improvements.
+
+### Bugfixes
+- Regular Expressions should now work correctly in Ruby 1.8.7
 
 2013-10-10 Release 0.3.0
 ========================

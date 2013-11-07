@@ -54,6 +54,9 @@ messed with.
 
 Release Notes
 --------
+####  v0.3.1
+- Regular expressions tweaked for 1.8.7 compatibility.
+
 ####  v0.3.0
 - Augeas add command equivalent added.
 - Aliases for ins and rm(insert and remove, respectively) created so it functions more like the augeas type.
