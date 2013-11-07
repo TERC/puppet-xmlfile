@@ -112,9 +112,11 @@ describe XmlLens do
       catalog.apply
       
       test = XmlLens.new(@rexml, xmllens_changes, nil)
-      test.evaluate.write($stdout)
+      #test.evaluate.write($stdout)
       
-      puts File.read(puppet_test)
+      #puts File.read(puppet_test)
+      
+      # Need to do a comparison, maybe XPath?
     end
   end
   
