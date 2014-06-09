@@ -5,19 +5,20 @@ require 'puppet/util/checksums'
 require 'puppet/provider/xmlfile/lens'
 
 # Equivalent to the file resource in every way but how it handles content.
-Puppet::Type.newtype(:xmlfile, :parent => Puppet::Type::File) do
+Puppet::Type.newtype(:xmlfile) do
   @doc = <<-'EOT'
-    An extension of the base file resource type.  An xmlfile behaves like a file in all ways
+    Previously an extension of the base file resource type, now a partial reimplementation with the
+    deprecation of :parent.  An xmlfile behaves like a file in all ways
     except that its content can be modified via xmlfile_modification resources.
     
     This enables the mixing of exported or virtual content and
     templated or static content, while managing the end-result as a single resource.
     
     The following attributes are inherited from the file type:
-    - path
     - ctime (read-only)
     - group
     - mode
+    - path
     - mtime (read-only)
     - owner
     - selinux_ignore_defaults
@@ -28,32 +29,35 @@ Puppet::Type.newtype(:xmlfile, :parent => Puppet::Type::File) do
     - source
     See: http://docs.puppetlabs.com/references/latest/type.html#file for details
   EOT
-  
+
   # Ignore rather than include in case the base class is messed with.  
   # Note that the parameters defined locally don't actually exist yet until this block is evaluated so to
   # act based on that kind of introspection you would need to move all of this into another file
   # that gets required after this block.
   IGNORED_PARAMETERS = [ :backup, :recurse, :recurselimit, :force, 
                          :ignore, :links, :purge, :sourceselect, :show_diff,
-                         :provider, :checksum, :type, :replace ]
+                         :provider, :checksum, :type, :replace, :path ]
   IGNORED_PROPERTIES = [ :ensure, :target, :content ]
   
   # Finish up extending the File type - define parameters and properties
   # that aren't ignored and aren't otherwise defined.
+
   
   # Parameters - appear to require a lookup
   Puppet::Type::File.parameters.each do |inherit|
     unless IGNORED_PARAMETERS.include?(inherit)
-      klass = "Puppet::Type::File::Parameter#{inherit.to_s.capitalize}"
       begin
-        newparam(inherit, :parent => self.const_get(klass)) do
-          desc self.const_get(klass).doc
+        klass = Puppet::Type::File.const_get("Parameter#{inherit.to_s.capitalize}")
+        newparam(inherit, :parent => klass) do
+          desc klass.doc
         end
-      rescue 
-        warning "Inheritance assumption case problem: #{klass} undefined but not ignored."
+      rescue Exception => err
+        warning "#{err}"
+        warning "Inheritance assumption case problem: #{klass} undefined but not ignored"
       end
     end
   end
+  
   
   # Properties are easier as the class is in the instance variable
   Puppet::Type::File.properties.each do |inherit|
@@ -74,9 +78,69 @@ Puppet::Type.newtype(:xmlfile, :parent => Puppet::Type::File) do
     return []
   end
   
+  # Now code lifted directly from puppet because we can't use :parent anymore
+  # Had to be stolen from File because :parent was deprecated
+  # this means all code is now under ASL ( frowny face)
+  newparam(:path) do
+    desc <<-'EOT'
+      The path to the file to manage. Must be fully qualified.
+
+      On Windows, the path should include the drive letter and should use `/` as
+      the separator character (rather than `\\`).
+    EOT
+    isnamevar
+
+    validate do |value|
+      unless Puppet::Util.absolute_path?(value)
+        fail Puppet::Error, "File paths must be fully qualified, not '#{value}'"
+      end
+    end
+
+    munge do |value|
+      if value.start_with?('//') and ::File.basename(value) == "/"
+        # This is a UNC path pointing to a share, so don't add a trailing slash
+        ::File.expand_path(value)
+      else
+        ::File.join(::File.split(::File.expand_path(value)))
+      end
+    end
+  end
+  
+  def exist?
+    stat ? true : false
+  end
+  
+  def stat
+    return @stat unless @stat == :needs_stat
+
+    method = :stat
+
+    @stat = begin
+      Puppet::FileSystem.send(method, self[:path])
+    rescue Errno::ENOENT => error
+      nil
+    rescue Errno::ENOTDIR => error
+      nil
+    rescue Errno::EACCES => error
+      warning "Could not stat; permission denied"
+      nil
+    end
+  end
+  
+  def property_fix
+    properties.each do |thing|
+      next unless [:mode, :owner, :group, :seluser, :selrole, :seltype, :selrange].include?(thing.name)
+
+      # Make sure we get a new stat objct
+      @stat = :needs_stat
+      currentvalue = thing.retrieve
+      thing.sync unless thing.safe_insync?(currentvalue)
+    end
+  end
+  
   # Now our code starts
   ensurable
-  
+    
   # Actual file content
   newproperty(:content) do
     desc <<-'EOT'

@@ -3,6 +3,18 @@
 Release notes for the terc-xmlfile module
 
 ---------------------------------------
+2014-06-09 Release 0.4.0
+
+### Summary
+Fixes issues introduced by deprecation of :parent and type inheritance.
+Removal of MIT license due to reuse of Puppetlabs code.
+
+### Enhancements
+- Compatibility with Puppet 3.4 +
+
+### Bugfixes
+- Issues in newer puppets
+
 
 2013-11-07 Release 0.3.1
 ========================
