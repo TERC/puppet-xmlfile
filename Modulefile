@@ -1,5 +1,5 @@
 name    'terc-xmlfile'
-version '0.3.1'
+version '0.4.0'
 source 'git://github.com/TERC/puppet-xmlfile'
 author 'cammoraton'
 license 'MIT or Apache 2.0'
