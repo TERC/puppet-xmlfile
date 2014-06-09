@@ -54,7 +54,7 @@ messed with.
 
 Release Notes
 --------
-### v0.4.0
+#### v0.4.0
 - Fixes issues introduced by deprecation of :parent and type inheritance.
 
 ####  v0.3.1
