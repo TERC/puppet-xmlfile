@@ -54,6 +54,9 @@ messed with.
 
 Release Notes
 --------
+### v0.4.0
+- Fixes issues introduced by deprecation of :parent and type inheritance.
+
 ####  v0.3.1
 - Regular expressions tweaked for 1.8.7 compatibility.
 
